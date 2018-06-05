@@ -19,7 +19,13 @@ class ViewController: UIViewController {
                             "부산광역시 부산진구 양정1동 356-22",
                             "부산광역시 부산진구 양정1동 350-1",
                             "부산광역시 부산진구 양정동 353-38"]
-    var foodStoreTitle = ["양정밀면", "번개반점", "아딸", "왕짜장", "늘해랑", "홍콩반점"]
+    var foodStoreTitle = ["양정밀면", "아딸", "왕짜장", "번개", "늘해랑", "홍콩반점"]
+    var foodStoreTel = ["051-863-6997",
+                        "051-852-9969",
+                        "051-852-9969",
+                        "051-852-9969",
+                        "051-852-9969",
+                        "051-853-0410"]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -88,10 +94,8 @@ class ViewController: UIViewController {
 //                print("nil 발생")
 //            }
 //        }
-
-        
+        var counter = 0
         for addr in foodStoreAddress {
-            let counter = self.foodStoreAddress.count
             let geocoder = CLGeocoder()
             geocoder.geocodeAddressString(addr) {
                 (placemarks: [CLPlacemark]?, error: Error?) -> Void in
@@ -103,6 +107,9 @@ class ViewController: UIViewController {
                 let loc = myPlacemarks.location?.coordinate
                 let pin = MKPointAnnotation()
                 pin.coordinate = loc!
+                pin.title = self.foodStoreTitle[counter]
+                pin.subtitle = self.foodStoreTel[counter]
+                counter = counter + 1
                 self.myMapView.addAnnotation(pin)
                 
             }
