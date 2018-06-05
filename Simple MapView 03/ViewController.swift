@@ -53,5 +53,36 @@ class ViewController: UIViewController {
         pin02.title = "동의과학대"
         pin02.subtitle = "부산광역시 부산진구 양정동 양지로 54"
         myMapView.addAnnotation(pin02)
+        
+        //// geocoding 클로저
+        let addr = "부산광역시 부산진구 양정1동 350-1"
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(addr) {
+            
+            (placemarks: [CLPlacemark]?, error: Error?) -> Void in
+            if let error = error {
+                print(error)
+                return
+            } else {
+                print("nil 발생")
+            }
+            if let placemarks = placemarks {
+            
+                let placemarks = placemarks[0]
+//                print(placemarks.location!)
+//                print(placemarks.name!)
+//                print(placemarks.postalCode!)
+//                print(placemarks.country!)
+                let loc02 = placemarks.location?.coordinate
+                let pin03 = MKPointAnnotation()
+                pin03.coordinate = loc02!
+                pin03.title = "늘해랑"
+                pin03.subtitle = addr
+                self.myMapView.addAnnotation(pin03)
+            } else {
+                print("nil 발생")
+            }
+        }
     }
 }
+
